@@ -28,6 +28,7 @@ class LanguagePack::Helpers::BundlerWrapper
   end
 
   def install
+    puts ENV['BUNDLE_GEMFILE']
     fetch_bundler
     $LOAD_PATH << @path
     require "bundler"
