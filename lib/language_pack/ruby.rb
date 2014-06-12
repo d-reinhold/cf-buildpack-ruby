@@ -32,7 +32,7 @@ class LanguagePack::Ruby < LanguagePack::Base
   end
 
   def self.bundler
-    @bundler ||= LanguagePack::Helpers::BundlerWrapper.new.install
+    @bundler ||= LanguagePack::Helpers::BundlerWrapper.new(gemfile_path: ENV['BUNDLE_GEMFILE']).install
   end
 
   def bundler
