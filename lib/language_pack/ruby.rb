@@ -474,9 +474,10 @@ WARNING
   def build_bundler
     instrument 'ruby.build_bundler' do
       log("bundle") do
+        bundle_gemfile = env("BUNDLE_GEMFILE")
         bundle_without = env("BUNDLE_WITHOUT") || "development:test"
         bundle_bin     = "bundle"
-        bundle_command = "#{bundle_bin} install --without #{bundle_without} --path vendor/bundle --binstubs #{bundler_binstubs_path}"
+        bundle_command = "#{bundle_bin} install --without #{bundle_without} --path vendor/bundle --binstubs #{bundler_binstubs_path} --gemfile #{bundle_gemfile}"
         bundle_command << " -j4"
 
         if bundler.windows_gemfile_lock?
@@ -513,7 +514,6 @@ WARNING
           # we need to set BUNDLE_CONFIG and BUNDLE_GEMFILE for
           # codon since it uses bundler.
           env_vars       = {
-            "BUNDLE_GEMFILE"                => "#{pwd}/Gemfile",
             "BUNDLE_CONFIG"                 => "#{pwd}/.bundle/config",
             "CPATH"                         => noshellescape("#{yaml_include}:$CPATH"),
             "CPPATH"                        => noshellescape("#{yaml_include}:$CPPATH"),
